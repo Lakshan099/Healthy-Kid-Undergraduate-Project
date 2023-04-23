@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/report.css">
+
+    <script src="js/filterData.js"></script>
+
+    <!-- <link rel="stylesheet" href="./css-1.css"> -->
+    <title>Fixed table</title>
+</head>
+
+<body>
+    <div class="heading">
+        <h1>Dropdown table filter using JavaScript</h1>
+        <!-- <button id="get-unique-values" onclick="getUniqueValuesFromColumn()">Get unique column values</button> -->
+    </div>
+    <div class="outer-wrapper">
+        <div class="table-wrapper">
+            <table id="emp-table">
+                <thead>
+                    <th col-index=1>Location
+                        <select class="table-filter" onchange="filter_rows()">
+                            <option value="all"></option>
+                        </select>
+                    </th>
+                    <th col-index=2>Report ID</th>
+                    <th col-index=3>Parent Name</th>
+                    <th col-index=4>Child Name</th>
+                    <th col-index=5>Child Age</th>
+                    <th col-index=6>Current Status</th>
+                    <th col-index=7>Height (cm)
+                        <select class="table-filter" onchange="filter_rows()">
+                            <option value="all"></option>
+                        </select>
+                    </th>
+
+                    <th col-index=8>Weight (kg)
+                        <select class="table-filter" onchange="filter_rows()">
+                            <option value="all"></option>
+                        </select>
+                    </th>
+                    <th col-index=9>Hart Rate (bpm)
+                        <select class="table-filter" onchange="filter_rows()">
+                            <option value="all"></option>
+                        </select>
+                    </th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Colombo</td>
+                        <td>101</td>
+                        <td>Nimali Perera</td>
+                        <td>Navidu Nethsara</td>
+                        <td>06</td>
+                        <td>Good</td>
+                        <td>60</td>
+                        <td>12</td>
+                        <td>120</td>
+                    </tr>
+                    <tr>
+                        <td>Horana</td>
+                        <td>102</td>
+                        <td>Nimali Perera</td>
+                        <td>Navidu Nethsara</td>
+                        <td>06</td>
+                        <td>Good</td>
+                        <td>60</td>
+                        <td>12</td>
+                        <td>120</td>
+                    </tr>
+                    <tr>
+                        <td>Panadura</td>
+                        <td>103</td>
+                        <td>Nimali Perera</td>
+                        <td>Navidu Nethsara</td>
+                        <td>06</td>
+                        <td>Bad</td>
+                        <td>30</td>
+                        <td>5</td>
+                        <td>80</td>
+                    </tr>
+                
+
+
+                </tbody>
+            </table>
+            <!-- <script>getUniqueValuesFromColumn()
+    </script> -->
+            <script>
+                window.onload = () => {
+                    console.log(document.querySelector("#emp-table > tbody > tr:nth-child(1) > td:nth-child(2) ").innerHTML);
+                };
+
+                getUniqueValuesFromColumn()
+
+            </script>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Healthy Kid</title>
+    <link rel="icon" type="image/png" href="images/logo1.png" />
+    <link rel="stylesheet" href="css/loginCss.css">
+</head>
+
+<body>
+    <div class="center">
+        <span class="material-icons-outlined"><img src="images/logo1.png" alt="Healthy Kid"
+                style="width:150px;height:150px;"></span>
+        <h1>Login</h1>
+
+        <form method="post">
+            <div class="txt_field">
+                <input type="text" name="email" id="email" required>
+                <span></span>
+                <label>Username</label>
+            </div>
+            <div class="txt_field">
+                <input type="password" name="psw" id="psw" required>
+                <span></span>
+                <label>Password</label>
+            </div>
+
+
+            <button type="button" id="submitData" name="submitData">Login</button>
+            <div class="signup_link">
+                Don't have an account <a href="signup">Sign Up</a>
+            </div>
+        </form>
+    </div>
+
+</body>
+
+</html>
+
+
+<script type="module">
+
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import {
+        getAuth,
+        createUserWithEmailAndPassword,
+        signInWithEmailAndPassword,
+        signOut
+    } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+    import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBO4PtPQwFT-A09h1BaNDGb6homZDIL-oU",
+        authDomain: "healthy-kid-8a121.firebaseapp.com",
+        databaseURL: "https://healthy-kid-8a121-default-rtdb.firebaseio.com",
+        projectId: "healthy-kid-8a121",
+        storageBucket: "healthy-kid-8a121.appspot.com",
+        messagingSenderId: "1075043222463",
+        appId: "1:1075043222463:web:4639b2ea7c98bf3ad8970a",
+        measurementId: "G-0VBYLVWZH9"
+    };
+
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+    const database = getDatabase(app);
+
+    submitData.addEventListener('click', (e) => {
+
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('psw').value;
+
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+
+                const user = userCredential.user;
+         
+
+   
+                var lgDate = new Date();
+                update(ref(database, 'AdminUsers/' + user.uid), {
+                    last_login: lgDate,
+                })
+                    .then(() => {
+   
+                        window.location.href = "dashbord";
+
+                    })
+                    .catch((error) => {
+        
+                        alert(error);
+                    });
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                alert(errorMessage);
+            });
+    });
+
+</script>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Reports</title>
+    <link rel="icon" type="image/png" href="images/logo1.png" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Montserrat Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/report.css">
+
+    <script src="js/filterData.js"></script>
+
+    <meta charset="windows-1252">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+</head>
+
+<body>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <div class="grid-container">
+
+        <!-- Header -->
+        <header class="header">
+            <div class="menu-icon" onclick="openSidebar()">
+                <span class="material-icons-outlined">menu</span>
+            </div>
+            <div class="header-left">
+                <span class="material-icons-outlined">search</span>
+            </div>
+            <div class="header-right">
+                <!--<span class="material-icons-outlined">notifications</span>
+          <span class="material-icons-outlined">email</span>-->
+                <span class="material-icons-outlined">account_circle</span>
+            </div>
+        </header>
+        <!-- End Header -->
+
+        <!-- Sidebar -->
+    <aside id="sidebar">
+        <div class="sidebar-title">
+            <div class="sidebar-brand">
+                <span class="material-icons-outlined"><img src="images/logo1.png" alt="Healthy Kid"
+                        style="width:40px;height:40px;"></span> Healthy Kid
+            </div>
+            <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+        </div>
+    
+        <ul class="sidebar-list">
+            <li class="sidebar-list-item">
+                <a href="dashbord">
+                    <span class="material-icons-outlined">dashboard</span> Dashboard
+                </a>
+            </li>
+            <li class="sidebar-list-item">
+                <a href="user">
+                    <span class="material-icons-outlined">person</span> Users
+                </a>
+            </li>
+            <li class="sidebar-list-item">
+                <a href="contact">
+                    <span class="material-icons-outlined">forum</span> Contact
+                </a>
+            </li>
+            <li class="sidebar-list-item">
+                <a href="clinic">
+                    <span class="material-icons-outlined">medical_services</span> Clinics
+                </a>
+            <li class="sidebar-list-item">
+                <a href="/">
+                    <span class="material-icons-outlined">poll</span> Reports
+                </a>
+            </li>
+            <li class="sidebar-list-item">
+                <a href="/">
+                    <span class="material-icons-outlined">logout</span> Sign out
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+        <!-- End Sidebar -->
+
+        <!-- Main -->
+        <main class="main-container">
+            <div class="main-title">
+                <p class="font-weight-bold">Health Reports</p>
+            </div>
+
+            <div class="input-group mb-3 mt-3">
+                <input id="SearchBar" type="text" class="form-control" placeholder="Search A Record"
+                    aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <select class="custom-select" id="CategorySelected">
+                        <option selected value="1">By Location</option>
+                        <option value="2">By Height</option>
+                        <option value="3">By Weight</option>
+                        <option value="4">By Hart Rate</option>
+                        <option value="5">By Date</option>
+                    </select>
+                    <button id="SearchBtn" class="btn btn-outline-primary ml-1" type="button">Search</button>
+                </div>
+            </div>
+
+            <div class="outer-wrapper">
+                <div class="table-wrapper">
+                    <table id="emp-table">
+                        <thead>
+                            <th>Location</th>
+                            <th>Report ID</th>
+                            <th>Parent Name</th>
+                            <th>Child Name</th>
+                            <th>Child Age</th>
+                            <th>Current Status</th>
+                            <th>Height (cm)</th>
+                            <th>Weight (kg)</th>
+                            <th>Hart Rate (bpm)</th>
+                            <th>Date</th>
+                        </thead>
+                        <tbody id="tbody">
+
+                        </tbody>
+                    </table>
+
+                    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+                    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
+                    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+
+                    <script id="MainScript">
+                        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+                        const firebaseConfig = {
+                            apiKey: "AIzaSyBO4PtPQwFT-A09h1BaNDGb6homZDIL-oU",
+                            authDomain: "healthy-kid-8a121.firebaseapp.com",
+                            databaseURL: "https://healthy-kid-8a121-default-rtdb.firebaseio.com",
+                            projectId: "healthy-kid-8a121",
+                            storageBucket: "healthy-kid-8a121.appspot.com",
+                            messagingSenderId: "1075043222463",
+                            appId: "1:1075043222463:web:4639b2ea7c98bf3ad8970a",
+                            measurementId: "G-0VBYLVWZH9"
+                        };
+
+                        firebase.initializeApp(firebaseConfig);
+                        let db = firebase.firestore();
+
+                        function GetAllDataOnce() {
+                            db.collection("Health_Reports").get().then((querySnapshot) => {
+                                var users = [];
+                                querySnapshot.forEach(doc => {
+                                    users.push(doc.data());
+                                });
+                                AddAllItemsToTheTable(users);
+
+                            });
+                        }
+
+                        function GetAllDataRealtime() {
+                            db.collection("Health_Reports").onSnapshot((querySnapshot) => {
+                                var users = [];
+                                querySnapshot.forEach(doc => {
+                                    users.push(doc.data());
+                                });
+                                AddAllItemsToTheTable(users);
+
+                            });
+                        }
+
+                        var userID = 0;
+                        var tbody = document.getElementById('tbody');
+
+                        function AddItemToTable(location, pname, cname, cage, cstatus, height, weight, bpm, date) {
+                            var trow = document.createElement('tr');
+                            var td1 = document.createElement('td');
+                            var td2 = document.createElement('td');
+                            var td3 = document.createElement('td');
+                            var td4 = document.createElement('td');
+                            var td5 = document.createElement('td');
+                            var td6 = document.createElement('td');
+                            var td7 = document.createElement('td');
+                            var td8 = document.createElement('td');
+                            var td9 = document.createElement('td');
+                            var td10 = document.createElement('td');
+
+
+                            td1.innerHTML = location;
+                            td2.innerHTML = ++userID;
+                            td3.innerHTML = pname;
+                            td4.innerHTML = cname;
+                            td5.innerHTML = cage;
+                            td6.innerHTML = cstatus;
+                            td7.innerHTML = height;
+                            td8.innerHTML = weight;
+                            td9.innerHTML = bpm;
+                            td10.innerHTML = date;
+
+                            td1.classList += "locationFeild";
+                            td2.classList += "userIDFeild";
+                            td3.classList += "pnameFeild";
+                            td4.classList += "cnameFeild";
+                            td5.classList += "cageFeild";
+                            td6.classList += "cstatusFeild";
+                            td7.classList += "heightFeild";
+                            td8.classList += "weightFeild";
+                            td9.classList += "bpmFeild";
+                            td10.classList += "dateFeild";
+
+                            trow.appendChild(td1);
+                            trow.appendChild(td2);
+                            trow.appendChild(td3);
+                            trow.appendChild(td4);
+                            trow.appendChild(td5);
+                            trow.appendChild(td6);
+                            trow.appendChild(td7);
+                            trow.appendChild(td8);
+                            trow.appendChild(td9);
+                            trow.appendChild(td10);
+
+                            tbody.appendChild(trow);
+                        }
+
+                        function AddAllItemsToTheTable(UserDocsList) {
+                            userID = 0;
+                            tbody.innerHTML = "";
+                            UserDocsList.forEach(element => {
+                                AddItemToTable(element.Location, element.Name, element.ChildName, element.ChildAge, element.CurrentSt, element.Height, element.Weight, element.bpm, element.Date,);
+                            });
+                        }
+
+                        var searchBar = document.getElementById("SearchBar");
+                        var searchBtn = document.getElementById("SearchBar");
+                        var category = document.getElementById("CategorySelected");
+                        var tbody = document.getElementById("tbody");
+
+
+                        function SearchTable(Category) {
+
+                            var filter = searchBar.value.toUpperCase();
+                            var tr = tbody.getElementsByTagName("tr");
+                            var found;
+
+                            for (let i = 0; i < tr.length; i++) {
+                                var td = tr[i].getElementsByClassName(Category)
+
+                                for (let j = 0; j < td.length; j++) {
+                                    if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                                        found = true;
+                                    }
+                                }
+
+                                if (found) {
+                                    tr[i].style.display = "";
+                                    found = false;
+                                }
+                                else {
+                                    tr[i].style.display = "none";
+                                }
+                            }
+
+
+                        }
+
+
+                        function SearchTableByExactValues(Category) {
+
+                                var filter = searchBar.value.toUpperCase();
+                                var tr = tbody.getElementsByTagName("tr");
+                                var found;
+
+                                for (let i = 0; i < tr.length; i++) {
+                                    var td = tr[i].getElementsByClassName(Category)
+
+                                    for (let j = 0; j < td.length; j++) {
+                                        if (td[j].innerHTML.toUpperCase() == filter) {
+                                            found = true;
+                                        }
+                                    }
+
+                                    if (found) {
+                                        tr[i].style.display = "";
+                                        found = false;
+                                    }
+                                    else {
+                                        tr[i].style.display = "none";
+                                    }
+                                }
+
+
+                            }
+
+                        SearchBtn.onclick = function () {
+                            if (searchBar.value == "");
+
+                            else if (category.value == 1)
+                                SearchTableByExactValues("locationFeild");
+
+                            else if (category.value == 2)
+                                SearchTable("heightFeild");
+
+                            else if (category.value == 3)
+                                SearchTable("weightFeild");
+
+                            else if (category.value == 4)
+                                SearchTable("bpmFeild");
+
+                            else if (category.value == 5)
+                                SearchTable("dateFeild");
+                        }
+
+
+                        searchBar.onkeypress = function(event){
+                            if(event.keyCode == 13){
+                                searchBtn.click();
+                            }
+                        }
+
+                        
+
+
+                        window.onload = GetAllDataRealtime();
+                           
+                            
+                    </script>
+
+
+
+                    <!-- <script>getUniqueValuesFromColumn()
+                </script> -->
+
+                </div>
+            </div>
+        </main>
+    </div>
+    <!-- End Main -->
+
+
+
+    <!-- Scripts -->
+    <!-- ApexCharts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.3/apexcharts.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/scripts.js"></script>
+</body>
+
+</html>

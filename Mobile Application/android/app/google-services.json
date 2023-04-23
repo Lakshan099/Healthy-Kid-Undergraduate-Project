@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1075043222463",
+    "project_id": "healthy-kid-8a121",
+    "storage_bucket": "healthy-kid-8a121.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1075043222463:android:7a64c3e0ec803b7bd8970a",
+        "android_client_info": {
+          "package_name": "com.example.healthy_kid_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1075043222463-caosbte4q238f6u1hgpn1ebmc0psldi2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeZpkR3mbse0VMqeLl8M-Tea85Cfs2H1c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1075043222463-caosbte4q238f6u1hgpn1ebmc0psldi2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

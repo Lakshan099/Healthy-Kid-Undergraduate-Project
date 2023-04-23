@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Clinic Event</title>
+    <link rel="icon" type="image/png" href="images/logo1.png" />
+    <link rel="stylesheet" href="css/chatMsg.css">
+
+    <!-- font Awesome CDN -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+        integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <div class="box">
+            <h3>Add Clinic Event</h3>
+            <div class="name">
+                <i class="fa fa-address-book"></i>
+                <input type="text" placeholder="Clinic Name" id="Cname">
+            </div>
+            <div class="name">
+                <i class="fa fa-location-arrow"></i>
+                <input type="text" placeholder="Location" id="location">
+            </div>
+
+            <div class="message-box">
+                <textarea id="description" cols="30" rows="5" placeholder="Description"></textarea>
+            </div>
+            <div class="name">
+                <i class="fa fa-calendar"></i>
+                <input type="date" placeholder="Date" id="date">
+            </div>
+            <div class="name">
+                <i class="fa fa-calendar"></i>
+                <input type="time" placeholder="Time" id="time">
+            </div>
+            <div class="button">
+                <button type="button" id="submitData" name="submitData" class="button button">Add Event</button>
+            </div>
+            <div class="message">
+                <div class="success" id="success">Your Event Successfully Add!</div>
+                <div class="danger" id="danger">Feilds Can't be Empty!</div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="js/chat.js"></script>
+</body>
+
+</html>
+
+<script type="module">
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+    import { getFirestore, setDoc, addDoc, doc, collection, Timestamp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-analytics.js";
+
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBO4PtPQwFT-A09h1BaNDGb6homZDIL-oU",
+        authDomain: "healthy-kid-8a121.firebaseapp.com",
+        databaseURL: "https://healthy-kid-8a121-default-rtdb.firebaseio.com",
+        projectId: "healthy-kid-8a121",
+        storageBucket: "healthy-kid-8a121.appspot.com",
+        messagingSenderId: "1075043222463",
+        appId: "1:1075043222463:web:4639b2ea7c98bf3ad8970a",
+        measurementId: "G-0VBYLVWZH9"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    // Initialize Cloud Firestore and get a reference to the service
+    const db = getFirestore(app);
+    const analytics = getAnalytics(app);
+
+
+
+    submitData.addEventListener('click', (e) => {
+        var Cname = document.getElementById('Cname').value;
+        var location = document.getElementById('location').value;
+        var description = document.getElementById('description').value;
+        var date = document.getElementById('date').value;
+        var time = document.getElementById('time').value;
+        var dicNew = description + "\n\n" + "Location: " + location + "\n" + "Date: " + date + "\n" + "Time: " + time;
+
+        setDoc(doc(collection(db, "events")), {
+            title: Cname,
+            location: location,
+            description: dicNew,
+            date: Timestamp.fromDate(new Date(date)),
+            dateN: date,
+            time: time
+
+        }).then(() => {
+
+            window.close();
+
+        });
+
+    });
+
+
+</script>
